@@ -238,7 +238,8 @@ if __name__ == '__main__':
     dest = 242  # satu mare
     first_scenario(source, dest, 3)
     first_scenario(source,dest,2)
-    second_scenario(source,dest)
+    second_scenario(source,dest,1)
+    second_scenario(source, dest,0)
     third_scenario(30,100,6)
 
 
