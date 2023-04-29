@@ -93,26 +93,25 @@ def first_scenario(s,d,time_multiple,plotting=True):
     y2 = []
     y3 = []
     for i, [a, y, z] in results_min_max_med.items():
-        #print(f"{i} {a} {y} {z}", file=f)
+
         x.append(i)
         y1.append(a)
         y2.append(y)
         y3.append(z)
     f.close()
+     
     yproc=[round(c / L[dest][Tmax] * 100, 2) for c in y2]
     if plotting:
         fig, (ax1, ax2) = plt.subplots(1, 2)
         ax1.plot(x, y1, label='minimum cov')
         ax1.plot(x, y2, label='medium cov')
         ax1.plot(x, y3, label='maximum cov')
-        # ax[1].set(xlabel='X Values', ylabel='Y Values',       title='Derivative Function of f')
+
         ax1.set(xlabel='number of platoon paths', ylabel='covering value')
-        # plt.xlabel('number of platoon paths')
-        # plt.ylabel('covering value')
-        #plt.legend()
-        ax2.plot(x, yproc)  # procentage pf path covered
+
+        ax2.plot(x, yproc)
         ax2.set(xlabel='number of platoon paths', ylabel='percentage of covered length')
-        # plt.ylabel('percentage of covered length')
+
         plt.savefig("experiment1.png")
         plt.show()
 
@@ -161,7 +160,7 @@ def third_scenario(nb_paths,nb_pairs,max_length,time_multiple=3):
     :param nb_pairs: number of pairs (source,destination) from the experiment
     :param max_length: experiments are made for each length from 1 to max_length
     :param time_multiple: Tmax=time_multiple*distance(source,dest)
-    :return: for each length of paths in how many scenarious average covering is min or max for this length of the paths
+    :return: for each length of paths in how many scenarious average covering is min or max for this length of the platoon paths
     """
     global dict_platoon_edges
     nb_tests=50
@@ -189,7 +188,7 @@ def third_scenario(nb_paths,nb_pairs,max_length,time_multiple=3):
         for lp in ls_length:
             res = 0
             for i in range(nb_tests):
-                #generate nb_paths of length 1, find medium of cov/P
+
                 rand_paths = [[]]
                 s = [[]]
                 dict_edges_platoon = {}
@@ -209,7 +208,7 @@ def third_scenario(nb_paths,nb_pairs,max_length,time_multiple=3):
                 DP, L  = Solve(gr, n, source, dest, Tmax, dict_platoon_edges, w)
 
                 res+=DP[dest][Tmax]*100/L[dest][Tmax]
-                #print(DP[dest][Tmax],L[dest][Tmax],D[source][dest],Tmax)
+
 
             res/=nb_tests
             y[(source,dest)][lp].append(res) #average cov for lp
