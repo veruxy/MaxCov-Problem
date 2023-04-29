@@ -43,16 +43,18 @@ def add_to_dict(i,vertices,start):
         x = y
 
 def first_scenario(s,d,time_multiple,plotting=True):
-    global dict_platoon_edges
     """
-    1. sursa, dest fixate
-Tmax=2*dist(sursa,dest)
-pt nr= 1, nr max plutoane fixate
-    gen plutoane aleat de 100 ori; la fiecare experiment- min cov, maxcov, media (plot sau tabel)
-concluzie - se stabilizeaza nr mic de plutoane eficient
 
-    :return:
+    :param s: - source
+    :param d: -destination
+    :param time_multiple: T_max=time_multiple*distance(source,destination)
+    :param plotting: the result is plotted or not
+    :return: run nb_tests=100 tests (MaxCov algorithm) for the pair (source,dest)
+    with nb_path platoon paths randomly generated with lengths between l_min and l_max,
+    with nb_path, l_min, l_max from parameters.csv
     """
+    global dict_platoon_edges
+
 
     source = s
     dest = d
@@ -62,7 +64,7 @@ concluzie - se stabilizeaza nr mic de plutoane eficient
 
 
     results= {}
-    nb_tests=50
+    nb_tests=100
 
     for j in range(nb_tests): #number of teste
         rand_paths = [[]]
@@ -118,10 +120,16 @@ concluzie - se stabilizeaza nr mic de plutoane eficient
     return yproc
 
 def second_scenario(source,dest,tip=1):
+    """
+    :param source: source
+    :param dest: destination
+    :param tip: what type of experiments we want, with time multiple in [4] or real
+    :return: how average covering evolves when Tmax have varios values, according to tip
+    """
 
     proc_results = [[]]
     max_times=6
-    #ls_times = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.5]
+    ls_times = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.5]
     if tip==1:
         ls_times = [1, 2, 3, 4]
     else:
@@ -147,6 +155,14 @@ def second_scenario(source,dest,tip=1):
 
     plt.show()
 def third_scenario(nb_paths,nb_pairs,max_length,time_multiple=3):
+    """
+
+    :param nb_paths: the total length of the platoon paths generated, equals number of paths if platoons paths have length 1
+    :param nb_pairs: number of pairs (source,destination) from the experiment
+    :param max_length: experiments are made for each length from 1 to max_length
+    :param time_multiple: Tmax=time_multiple*distance(source,dest)
+    :return: for each length of paths in how many scenarious average covering is min or max for this length of the paths
+    """
     global dict_platoon_edges
     nb_tests=50
     to_plot=[]
