@@ -123,12 +123,12 @@ def second_scenario(source,dest,tip=1):
     max_times=6
     #ls_times = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.5]
     if tip==1:
-        ls_times = [1,2,3,4]
+        ls_times = [1, 2, 3, 4]
     else:
-        ls_times = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75,3,3.5]
-    #ls_times=[1,1.25]
+        ls_times = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.5]
+
     proc_results={}
-    #for times in range(1, max_times):
+
     for times in ls_times:
 
         proc_results.update({times:first_scenario(source, dest, times, False)})
@@ -136,7 +136,7 @@ def second_scenario(source,dest,tip=1):
 
     x=list(range(1,nb_paths+1))
 
-    #for times in range(1, max_times):
+
     for times in ls_times:
         plt.plot(x, proc_results[times], label=f"times {times}")  # procentage pf path covered
 
