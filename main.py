@@ -249,12 +249,12 @@ if __name__ == '__main__':
     dict_platoon_edges = {}
     D = FloydWarshall(n, w)
 
-    #first_scenario(source, dest, 3,nb_tests=100 )
-    #first_scenario(source, dest, 2, nb_tests=100)
-    #second_scenario(source,dest,0,nb_tests=50)
+    first_scenario(source, dest, 3,nb_tests=100 )
+    first_scenario(source, dest, 2, nb_tests=100)
+    second_scenario(source,dest,0,nb_tests=50)
     second_scenario(source, dest, 1, nb_tests=50)
 
-    #third_scenario(30,1 ,6)
+    third_scenario(30,1 ,6)
 
 
 
