@@ -1,10 +1,10 @@
+"""
+This module contains a method that solves MaxCov problem using dynamic programming
+"""
 import copy
-D=[]
-P=[]
-inf=float("inf")
 
-def FolydWarshall(n,w):
-    global D,P
+def FloydWarshall(n,w):
+    inf = float("inf")
     D=copy.deepcopy(w)
     P=[[i if w[i][j]<inf and i!=j else 0 for j in range(n+1)] for i in range(n+1)]
     for k in range(1,n+1):
@@ -15,13 +15,29 @@ def FolydWarshall(n,w):
                     P[i][j]=P[k][j]
 
     return D
+def add_to_dict(w,i,vertices,start,dict_platoon_edges):
 
+    t = start
+    dict_platoon_edges[i] = [(vertices[0], t)]
+    x = vertices[0]
 
+    for y in vertices[1:]:
+        #dict_edges_platoon.setdefault((x, y), []).append(i)
+        t += w[x][y]
+        dict_platoon_edges[i].append((y, t))
+        x = y
 
+def platoon_to_dicts(w,platoon_paths, s):
 
+    dict_platoon_edges={}
+    for i in range(1, len(platoon_paths)):
+        add_to_dict(w,i, platoon_paths[i], s[i], dict_platoon_edges)
 
-def Solve(gr,n,source,dest,Tmax,dict_platoon_edges,w):
-    #get N teh set of pairs (v,t) from all platoons
+    return dict_platoon_edges
+
+def Solve(gr,n,source,dest,Tmax,w,D,platoon_paths=[], s=[],dict_platoon_edges=None): #dict_platoon_edges
+    if dict_platoon_edges is None:
+        dict_platoon_edges=platoon_to_dicts(w,platoon_paths, s)
 
     N=set()
     for pl in dict_platoon_edges:
@@ -32,6 +48,8 @@ def Solve(gr,n,source,dest,Tmax,dict_platoon_edges,w):
 
     N.add((dest, Tmax))
     nb_pairs=len(N)
+
+
     DP=[[-float("inf") for t in range(0,Tmax+1)]for i in range(n+1) ]
     L=[[-float("inf") for t in range(0,Tmax+1)]for i in range(n+1) ]
    # Fathers = [[(source,0,t-D[source][i],1,0) if t-D[source][i]>=0 else (None,None,None,-1,0)for t in range(0, Tmax + 1)] for i in range(n + 1)]
@@ -72,25 +90,4 @@ def Solve(gr,n,source,dest,Tmax,dict_platoon_edges,w):
     return DP,L#,Fathers
 
 
-
-def printShortestPath(u,v):
-    global ls_path
-    if u==v:
-        return
-    if   u!=P[u][v]:
-        printShortestPath(u,P[u][v])
-    ls_path.append((v,"wait",0,"type",0))
-
-def printPath(v,t,w):
-    print(v,t,Fathers[v][t])
-    global ls_path
-    a=0
-    if (v,t)!=(source,0):
-        u,tp,wu,tip,a=Fathers[v][t]
-        if u!=v:
-            printPath(u, tp,wu)
-        if tip==1  and u!=v and u!=P[u][v]:
-            printShortestPath(u,P[u][v])
-
-    ls_path.append((v,"wait",w,"type",a))
 

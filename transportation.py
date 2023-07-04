@@ -1,7 +1,7 @@
 import networkx as nx
 import math
 import csv
-def read_graph(file_name):
+def read_graph(file_name, from_zero=True,nb_dec=1):
 
     f = open(file_name)
     n=int(f.readline())
@@ -10,18 +10,35 @@ def read_graph(file_name):
     w = [[float("inf") for i in range(n + 1)] for j in range(n + 1)]
     for i in range(n+1):
         w[i][i]=0
-    nb_dec=1
+
     for linie in f:
         ls = linie.split()
         x, y, c = int(ls[0]), int(ls[1]), float(ls[2])
-        c=int(c*math.pow(10,nb_dec)) #rotunjit la nb_dec zecimale, trecut la int,deocamdata 0
+        if not from_zero:
+            x-=1
+            y-=1
+        c=int(c*math.pow(10,nb_dec))
         w[x+1][y+1] = w[y+1][x+1] = c
         gr.add_edge(x+1, y+1, weight=c)
 
 
     f.close()
-    gr_big = get_subgraph(gr)
-    return gr,w,n, gr_big
+
+    return gr,w,n
+def read_platoons(file_name ):
+    platoon_paths=[]
+    with open(file_name) as f:
+        nb_platoons_K=int(f.readline())
+        platoon_paths=[[]]+[[int(x) for x in f.readline().split()]for i in range(nb_platoons_K)]
+
+        s=[0]+[int(x) for x in f.readline().split()]
+        T_max=int(f.readline())
+        source = int(f.readline())
+        dest = int(f.readline())
+
+
+    return platoon_paths,s,T_max,source,dest
+
 def get_medium_population():
     csv_file = open("data.csv")
     csv_reader = list(csv.DictReader(csv_file))

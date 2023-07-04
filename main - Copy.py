@@ -71,8 +71,7 @@ def first_scenario(s,d,time_multiple,plotting=True,nb_tests=100):
             ts = random.randint(0,max(Tmax-nx.path_weight(gr,vertices,weight='weight')-1,0)) #start time
             rand_paths.append(vertices)
             s.append(ts)
-
-            add_to_dict(w, len(rand_paths) - 1, vertices, ts, dict_platoon_edges)
+            add_to_dict(len(rand_paths) - 1, vertices, ts)
 
             DP, L  = Solve(gr,n,source,dest,Tmax,w,D,dict_platoon_edges=dict_platoon_edges)
 
@@ -199,8 +198,7 @@ def third_scenario(nb_paths,nb_pairs,max_length,time_multiple=3):
                     ts = random.randint(0, max(Tmax - nx.path_weight(gr, vertices, weight='weight') - 1, 0))  # start time
                     rand_paths.append(vertices)
                     s.append(ts)
-                    add_to_dict(w, len(rand_paths) - 1, vertices, ts, dict_platoon_edges)
-
+                    add_to_dict(len(rand_paths) - 1, vertices, ts)
 
 
                 DP, L  = Solve(gr, n, source, dest, Tmax,w=w,D=D,dict_platoon_edges=dict_platoon_edges)
@@ -252,7 +250,7 @@ if __name__ == '__main__':
     #first_scenario(source, dest, 3,nb_tests=100 )
     #first_scenario(source, dest, 2, nb_tests=100)
     #second_scenario(source,dest,0,nb_tests=50)
-    second_scenario(source, dest, 1, nb_tests=50)
+    #second_scenario(source, dest, 1, nb_tests=50)
 
     #third_scenario(30,1 ,6)
 
