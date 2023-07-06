@@ -6,4 +6,4 @@ MaxCov Problem - dynamic programming algorithm and experiments
 4. data.csv - localities from network
 5. paramaters.csv - parameters for running experiments   
 6. main.py - with experiments first_scenario,  second_scenario, third_scenario; additional running for scenarious can be added in main
-7. test_main.py - tests for the DP algorithm for the three graphs included as examples in the paper (graph1.in contains the graph given by the list of edges, platoons1.in contains the number of the platoons, vertices of each platoon, starting times, Tmax, source and destination)
+7. test_main.py - tests for the DP algorithm for the three graphs included as examples in the paper (graphi.in contains the graph given by the list of edges, platoonsi.in contains the number of the platoons, vertices of each platoon, starting times, Tmax, source and destination and answi.in the expected answer)
